@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Psicología del Desarrollo · Álbum del semestre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#edf3f0; --ink:#16303a; --muted:#51656c; --card:#ffffff; --line:#cddcd6;
+  --c1:#3d9f6b; --c2:#e8a82c; --c3:#e57368; --c4:#4a96d6; --c5:#8b6fd0;
+  --t1:#e0f0e7; --t2:#fbecd0; --t3:#f9dcd8; --t4:#d9e8f6; --t5:#e5def5;
+  --on1:#fff; --on2:#2a1f05; --on3:#fff; --on4:#fff; --on5:#fff;
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1c21; --ink:#e8f1ee; --muted:#9db1b8; --card:#16282f; --line:#2b4650;
+    --t1:#1d3a2c; --t2:#3d3216; --t3:#40231f; --t4:#1b3249; --t5:#2c2547; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1c21; --ink:#e8f1ee; --muted:#9db1b8; --card:#16282f; --line:#2b4650;
+  --t1:#1d3a2c; --t2:#3d3216; --t3:#40231f; --t4:#1b3249; --t5:#2c2547; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{height:auto;scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header.hero{padding:72px 0 8px}
+.kicker{color:var(--muted);margin:0 0 18px;font-size:16px}
+h1{font-family:Archivo,"Arial Black",sans-serif;font-weight:900;font-size:clamp(52px,9vw,104px);line-height:1.02;letter-spacing:-.035em;margin:0;max-width:9.5em}
+.lead{max-width:34em;color:var(--muted);font-size:19px;margin:24px 0 0}
+.path{margin:36px 0 0}
+.path svg{width:100%;height:auto;display:block;overflow:visible}
+.path .trail{fill:none;stroke:var(--line);stroke-width:7;stroke-linecap:round;stroke-dasharray:.1 15}
+.path a{cursor:pointer;outline:none}
+.node circle{transition:transform .2s ease;transform-box:fill-box;transform-origin:center}
+.node:hover circle,.node:focus-visible circle{transform:scale(1.15)}
+.node:focus-visible circle{stroke:var(--ink);stroke-width:3}
+.node text{font:800 22px Archivo,sans-serif;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+
+nav.pills{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);margin-top:28px}
+nav.pills .wrap{display:flex;justify-content:flex-end;gap:8px;padding-top:10px;padding-bottom:10px;overflow-x:auto}
+nav.pills a{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:15px;transition:background .2s,border-color .2s,color .2s}
+nav.pills a.on{background:var(--c);border-color:var(--c);color:var(--on)}
+nav.pills a:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+
+main{padding:48px 0 96px}
+.track{position:relative;padding-left:56px}
+.track::before{content:"";position:absolute;left:19px;top:0;bottom:0;border-left:3px dotted var(--line)}
+.station{position:relative;margin-bottom:44px;max-width:760px}
+.station .dot{position:absolute;left:-56px;top:26px;width:40px;height:40px;border-radius:50%;background:var(--c);color:var(--on);display:grid;place-items:center;font:800 17px Archivo,sans-serif}
+.card{background:var(--card);border:2px solid var(--c);border-radius:30px;padding:28px 30px 30px}
+.tag{display:inline-block;background:var(--t);color:var(--ink);font-weight:700;font-size:14px;padding:3px 14px;border-radius:99px}
+.card h2{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(28px,4vw,38px);line-height:1.1;letter-spacing:-.02em;margin:14px 0 8px}
+.card p{margin:0;color:var(--muted);max-width:34em}
+.btn{margin-top:22px;border:0;cursor:pointer;background:var(--c);color:var(--on);font:700 17px "DM Sans",sans-serif;padding:14px 26px;border-radius:99px}
+.btn:hover{filter:brightness(1.06)}
+.panel{display:none;margin-top:22px;padding:18px 20px;border-radius:18px;background:var(--t);color:var(--ink)}
+.panel.open{display:block}
+footer{padding:0 0 56px;color:var(--muted);font-size:15px}
+@media (max-width:640px){
+  .wrap{padding:0 18px}.track{padding-left:44px}.station .dot{left:-44px;width:34px;height:34px;font-size:15px}
+  .track::before{left:15px}.card{padding:22px 20px 24px;border-radius:24px}header.hero{padding-top:48px}
+}
+#guia{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:40}
+#guia-btn{display:flex;align-items:center;gap:10px;border:0;cursor:pointer;background:var(--c);color:var(--on);font:700 16px "DM Sans",sans-serif;padding:7px 20px 7px 7px;border-radius:99px;box-shadow:0 6px 22px rgba(0,0,0,.22);transition:background .3s}
+#guia-btn .av{width:40px;height:40px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:22px}
+#guia-panel{display:none;position:absolute;right:0;bottom:64px;width:min(390px,calc(100vw - 36px));height:min(540px,calc(100vh - 150px));flex-direction:column;background:var(--card);border:2px solid var(--c);border-radius:26px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+#guia-panel.open{display:flex}
+.g-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;background:var(--t)}
+.g-head b{font:800 20px Archivo,sans-serif;letter-spacing:-.01em}
+.g-head small{display:block;color:var(--muted);font-size:14px;line-height:1.3}
+#guia-x{border:0;background:transparent;color:var(--ink);font-size:26px;line-height:1;cursor:pointer;padding:4px 8px;border-radius:10px}
+#guia-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:86%;padding:10px 14px;border-radius:18px;white-space:pre-wrap;font-size:16px;line-height:1.45;overflow-wrap:anywhere}
+.m.guia{align-self:flex-start;background:var(--t);border-bottom-left-radius:6px}
+.m.yo{align-self:flex-end;background:var(--c);color:var(--on);border-bottom-right-radius:6px}
+#guia-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px}
+#guia-chips button{border:2px solid var(--line);background:transparent;color:var(--ink);font:500 14px "DM Sans",sans-serif;padding:6px 12px;border-radius:99px;cursor:pointer}
+#guia-chips button:hover{border-color:var(--c)}
+#guia-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+#guia-in{flex:1;min-width:0;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:400 16px "DM Sans",sans-serif;padding:10px 16px;border-radius:99px}
+#guia-in:focus{outline:none;border-color:var(--c)}
+#guia-form button{border:0;cursor:pointer;background:var(--c);color:var(--on);font:700 15px "DM Sans",sans-serif;padding:0 18px;border-radius:99px}
+#guia-btn:focus-visible,#guia-x:focus-visible,#guia-chips button:focus-visible,#guia-form button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Álbum del semestre · <span id="autor">Tu nombre aquí</span></p>
+    <h1>Psicología del Desarrollo</h1>
+    <p class="lead">Un recorrido por cinco estaciones, una por cada actividad que trabajamos en el semestre. Entra a cada parada y mira qué hicimos y qué aprendimos.</p>
+    <div class="path" aria-label="Mapa del recorrido">
+      <svg id="mapa" viewBox="0 0 1100 260" role="img" aria-label="Recorrido con cinco estaciones"></svg>
+    </div>
+  </div>
+</header>
+
+<nav class="pills" aria-label="Estaciones"><div class="wrap" id="pills"></div></nav>
+
+<main>
+  <div class="wrap">
+    <div class="track" id="track"></div>
+  </div>
+</main>
+<footer><div class="wrap">Álbum de Psicología del Desarrollo</div></footer>
+
+<div id="guia">
+  <div id="guia-panel" role="dialog" aria-label="Chat con Brote, el guía">
+    <div class="g-head"><div><b>Brote</b><small id="guia-sub">Tu guía en el recorrido</small></div><button id="guia-x" type="button" aria-label="Cerrar el chat">×</button></div>
+    <div id="guia-msgs" aria-live="polite"></div>
+    <div id="guia-chips"></div>
+    <form id="guia-form"><input id="guia-in" type="text" autocomplete="off" placeholder="Escribe tu pregunta" aria-label="Tu pregunta"><button type="submit">Enviar</button></form>
+  </div>
+  <button id="guia-btn" type="button" aria-expanded="false"><span class="av" aria-hidden="true">🌱</span><span>Pregúntale a Brote</span></button>
+</div>
+
+<script>
+(function(){
+  var E=[1,2,3,4,5].map(function(n){return{n:n,titulo:"Título de la actividad",frase:"Aquí va una frase corta que cuenta de qué trató esta actividad y por qué fue importante en la materia."}});
+  var NS="http://www.w3.org/2000/svg";
+  function css(n){return "var(--c"+n+")"}
+  function sty(n){return "--c:var(--c"+n+");--t:var(--t"+n+");--on:var(--on"+n+")"}
+
+  // Mapa: el camino ondulado y las cinco estaciones colocadas a lo largo de él
+  var svg=document.getElementById("mapa");
+  var d="M70 190 C150 120 230 60 330 70 S450 150 560 175 S700 190 800 120 S930 20 1040 100";
+  var p=document.createElementNS(NS,"path");p.setAttribute("d",d);p.setAttribute("class","trail");svg.appendChild(p);
+  var L=p.getTotalLength();
+  E.forEach(function(e,i){
+    var pt=p.getPointAtLength(L*i/(E.length-1));
+    var a=document.createElementNS(NS,"a");
+    a.setAttribute("href","#estacion-"+e.n);a.setAttribute("class","node");
+    a.setAttribute("aria-label","Ir a la estación "+e.n);
+    var c=document.createElementNS(NS,"circle");
+    c.setAttribute("cx",pt.x);c.setAttribute("cy",pt.y);c.setAttribute("r",30);c.setAttribute("fill",css(e.n));
+    var t=document.createElementNS(NS,"text");
+    t.setAttribute("x",pt.x);t.setAttribute("y",pt.y);t.setAttribute("fill","var(--on"+e.n+")");t.textContent=e.n;
+    a.appendChild(c);a.appendChild(t);svg.appendChild(a);
+  });
+
+  // Estaciones y botones de navegación
+  var track=document.getElementById("track"),pills=document.getElementById("pills");
+  E.forEach(function(e){
+    var s=document.createElement("section");s.className="station";s.id="estacion-"+e.n;s.setAttribute("style",sty(e.n));
+    s.innerHTML='<div class="dot" aria-hidden="true">'+e.n+'</div><div class="card"><span class="tag">Actividad '+e.n+'</span><h2>'+e.titulo+'</h2><p>'+e.frase+'</p><button class="btn" type="button" aria-expanded="false">Ver la estación</button><div class="panel" role="region">Aquí irá el contenido de la estación: lo que hicimos, lo que aprendimos y algo para interactuar.</div></div>';
+    var b=s.querySelector(".btn"),pn=s.querySelector(".panel");
+    b.addEventListener("click",function(){var o=pn.classList.toggle("open");b.setAttribute("aria-expanded",o);b.textContent=o?"Cerrar la estación":"Ver la estación"});
+    track.appendChild(s);
+    var a=document.createElement("a");a.href="#estacion-"+e.n;a.textContent=e.n;a.setAttribute("style",sty(e.n));a.setAttribute("aria-label","Estación "+e.n);
+    pills.appendChild(a);
+  });
+
+  // Resalta el botón de la estación que se está viendo
+  var links=pills.querySelectorAll("a");
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){
+      if(x.isIntersecting){actual=+x.target.id.split("-")[1];pintar();links.forEach(function(l){l.classList.toggle("on",l.getAttribute("href")==="#"+x.target.id)})}
+    })},{rootMargin:"-40% 0px -50% 0px"});
+    document.querySelectorAll(".station").forEach(function(s){io.observe(s)});
+  }
+  links[0].classList.add("on");
+
+  // Guía con IA: Brote conversa en vivo si la página tiene permiso; si no, responde con textos preparados
+  var actual=1,hist=[],sample=null,iniciado=false,ocupado=false;
+  var G=document.getElementById("guia"),gb=document.getElementById("guia-btn"),gp=document.getElementById("guia-panel"),gm=document.getElementById("guia-msgs"),gf=document.getElementById("guia-form"),gi=document.getElementById("guia-in"),gs=document.getElementById("guia-sub"),gc=document.getElementById("guia-chips"),gx=document.getElementById("guia-x");
+  E.forEach(function(e){e.pendiente=e.titulo==="Título de la actividad"});
+  function pintar(){G.setAttribute("style",sty(actual));var e=E[actual-1];gs.textContent="Estación "+actual+(e.pendiente?"":" · "+e.titulo)}
+  function burbuja(t,q){var d=document.createElement("div");d.className="m "+q;d.textContent=t;gm.appendChild(d);gm.scrollTop=gm.scrollHeight;return d}
+  function guion(t){
+    var e=E[actual-1];
+    if(/empiezo/i.test(t))return "Empieza por la estación 1 y sigue el camino hasta la 5. Cada estación es una actividad que trabajamos en el semestre.";
+    if(/expl[ií]came/i.test(t))return e.pendiente?"La estación "+actual+" todavía está en construcción. Pronto tendrá su contenido.":e.titulo+": "+e.frase;
+    if(/prueba/i.test(t))return "Una pregunta para pensar: ¿en qué etapa del desarrollo está una persona de tu edad y qué retos propios tiene esa etapa?";
+    return "Por ahora solo puedo responder con las opciones de arriba. Prueba con una de ellas.";
+  }
+  function armar(){
+    var lista=E.map(function(e){return "Estación "+e.n+": "+(e.pendiente?"(contenido por completar)":e.titulo+". "+e.frase)}).join("\n");
+    return "Eres Brote, el guía de un álbum web sobre Psicología del Desarrollo que un estudiante universitario hizo como trabajo de la materia. Hablas en español, de forma cercana y clara, sin tecnicismos innecesarios, en máximo 80 palabras. Ayudas al visitante a recorrer las 5 estaciones (cada una es una actividad del semestre) y a entender los conceptos de la materia. No inventes qué se hizo en cada actividad: solo sabes esto:\n"+lista+"\nSi la estación está por completar, dilo y ofrece explicar el tema en general. Puedes cerrar con una pregunta corta de repaso. El visitante está viendo la estación "+actual+".\n\nConversación:\n"+hist.slice(-8).join("\n")+"\n\nResponde solo como Brote al último mensaje del visitante.";
+  }
+  function enviar(t){
+    t=t.trim();if(!t||ocupado)return;
+    burbuja(t,"yo");gi.value="";hist.push("Visitante: "+t);
+    var b=burbuja("Pensando…","guia");
+    function fin(x){b.textContent=x;hist.push("Brote: "+x);gm.scrollTop=gm.scrollHeight}
+    if(!sample){fin(guion(t));return}
+    ocupado=true;
+    sample(armar(),{cache:false,onText:function(r){if(r.text){b.textContent=r.text;gm.scrollTop=gm.scrollHeight}}})
+      .then(function(r){fin(r.text||guion(t))})
+      .catch(function(e){
+        var c=e&&e.code;
+        if(c==="not_granted"){sample=null;fin("No tengo permiso para conversar en vivo, pero puedo ayudarte con las opciones de abajo.\n\n"+guion(t))}
+        else if(c==="rate_limited"){fin("Estoy recibiendo muchas preguntas. Intenta de nuevo en un momento.")}
+        else{fin("No pude responder esta vez. "+guion(t))}
+      })
+      .then(function(){ocupado=false});
+  }
+  function abrir(o){
+    gp.classList.toggle("open",o);gb.setAttribute("aria-expanded",o);
+    if(o){
+      if(!iniciado){iniciado=true;
+        burbuja("¡Hola! Soy Brote, tu guía en este recorrido. Puedo contarte de qué trata cada estación y ayudarte con los conceptos de la materia. ¿Por dónde quieres empezar?","guia");
+        if(window.claude&&window.claude.use){window.claude.use("sample").then(function(s){sample=s}).catch(function(){})}
+      }
+      gi.focus();
+    }
+  }
+  ["¿Por dónde empiezo?","Explícame esta estación","Ponme a prueba"].forEach(function(t){
+    var c=document.createElement("button");c.type="button";c.textContent=t;c.addEventListener("click",function(){enviar(t)});gc.appendChild(c);
+  });
+  gb.addEventListener("click",function(){abrir(!gp.classList.contains("open"))});
+  gx.addEventListener("click",function(){abrir(false);gb.focus()});
+  gf.addEventListener("submit",function(ev){ev.preventDefault();enviar(gi.value)});
+  document.addEventListener("keydown",function(ev){if(ev.key==="Escape"&&gp.classList.contains("open")){abrir(false);gb.focus()}});
+  pintar();
+})();
+</script>
+</body>
+</html>
